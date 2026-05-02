@@ -1,0 +1,331 @@
+{
+  "info": {
+    "_postman_id": "c1b9c9b1-d7b6-4be7-9f45-d691a0c4a6dd",
+    "name": "Food Ordering System (Gateway)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// No-op"
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// No-op"
+        ]
+      }
+    }
+  ],
+  "item": [
+    {
+      "name": "01 - Auth (user-service)",
+      "item": [
+        {
+          "name": "Register (CUSTOMER by default)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Test Customer\",\r\n  \"email\": \"customer1@test.com\",\r\n  \"password\": \"Pass@123456\",\r\n  \"phone\": \"01000000000\",\r\n  \"address\": \"Cairo\"\r\n}\r\n"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/user-service/api/auth/register",
+              "host": [ "{{baseUrl}}" ],
+              "path": [ "user-service", "api", "auth", "register" ]
+            }
+          }
+        },
+        {
+          "name": "Register (ADMIN)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Test Admin\",\r\n  \"email\": \"admin1@test.com\",\r\n  \"password\": \"Pass@123456\",\r\n  \"phone\": \"01000000001\",\r\n  \"address\": \"Cairo\",\r\n  \"role\": \"ADMIN\"\r\n}\r\n"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/user-service/api/auth/register",
+              "host": [ "{{baseUrl}}" ],
+              "path": [ "user-service", "api", "auth", "register" ]
+            }
+          }
+        },
+        {
+          "name": "Login (CUSTOMER) -> set {{token}}",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "try {",
+                  "  const json = pm.response.json();",
+                  "  if (json && json.token) pm.environment.set('token', json.token);",
+                  "} catch (e) {}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"email\": \"customer1@test.com\",\r\n  \"password\": \"Pass@123456\"\r\n}\r\n"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/user-service/api/auth/login",
+              "host": [ "{{baseUrl}}" ],
+              "path": [ "user-service", "api", "auth", "login" ]
+            }
+          }
+        },
+        {
+          "name": "Login (ADMIN) -> set {{adminToken}}",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "try {",
+                  "  const json = pm.response.json();",
+                  "  if (json && json.token) pm.environment.set('adminToken', json.token);",
+                  "} catch (e) {}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"email\": \"admin1@test.com\",\r\n  \"password\": \"Pass@123456\"\r\n}\r\n"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/user-service/api/auth/login",
+              "host": [ "{{baseUrl}}" ],
+              "path": [ "user-service", "api", "auth", "login" ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "02 - Restaurant (restaurant-service)",
+      "item": [
+        {
+          "name": "Get all restaurants (public)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/restaurant-service/api/restaurants/all",
+              "host": [ "{{baseUrl}}" ],
+              "path": [ "restaurant-service", "api", "restaurants", "all" ]
+            }
+          }
+        },
+        {
+          "name": "Add restaurant (ADMIN)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Burger House\",\r\n  \"address\": \"Dokki\",\r\n  \"phone\": \"01011111111\"\r\n}\r\n"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/restaurant-service/api/restaurants/add",
+              "host": [ "{{baseUrl}}" ],
+              "path": [ "restaurant-service", "api", "restaurants", "add" ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "03 - Menu (restaurant-service)",
+      "item": [
+        {
+          "name": "Get menu item by id (public) -> uses {{menuItemId}}",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/restaurant-service/api/menu/{{menuItemId}}",
+              "host": [ "{{baseUrl}}" ],
+              "path": [ "restaurant-service", "api", "menu", "{{menuItemId}}" ]
+            }
+          }
+        },
+        {
+          "name": "Add menu item (ADMIN)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Cheese Burger\",\r\n  \"description\": \"Beef burger with cheese\",\r\n  \"price\": 120,\r\n  \"restaurantId\": {{restaurantId}}\r\n}\r\n"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/restaurant-service/api/menu/add",
+              "host": [ "{{baseUrl}}" ],
+              "path": [ "restaurant-service", "api", "menu", "add" ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "04 - Orders (order-service)",
+      "item": [
+        {
+          "name": "Create order (will call restaurant-service for prices)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "description": "Forwarded to restaurant-service (GET /api/menu/{id}). Menu GET is public, so token can be empty."
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"customerId\": {{customerId}},\r\n  \"restaurantId\": {{restaurantId}},\r\n  \"paymentMethod\": \"CASH\",\r\n  \"items\": [\r\n    { \"menuItemId\": {{menuItemId}}, \"quantity\": 2 }\r\n  ]\r\n}\r\n"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/order-service/api/orders",
+              "host": [ "{{baseUrl}}" ],
+              "path": [ "order-service", "api", "orders" ]
+            }
+          }
+        },
+        {
+          "name": "Get all orders",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/order-service/api/orders",
+              "host": [ "{{baseUrl}}" ],
+              "path": [ "order-service", "api", "orders" ]
+            }
+          }
+        },
+        {
+          "name": "Get order by id -> {{orderId}}",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/order-service/api/orders/{{orderId}}",
+              "host": [ "{{baseUrl}}" ],
+              "path": [ "order-service", "api", "orders", "{{orderId}}" ]
+            }
+          }
+        },
+        {
+          "name": "Get orders by customerId -> {{customerId}}",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/order-service/api/orders/customer/{{customerId}}",
+              "host": [ "{{baseUrl}}" ],
+              "path": [ "order-service", "api", "orders", "customer", "{{customerId}}" ]
+            }
+          }
+        },
+        {
+          "name": "Get orders by restaurantId -> {{restaurantId}}",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/order-service/api/orders/restaurant/{{restaurantId}}",
+              "host": [ "{{baseUrl}}" ],
+              "path": [ "order-service", "api", "orders", "restaurant", "{{restaurantId}}" ]
+            }
+          }
+        },
+        {
+          "name": "Update order status -> {{orderId}}",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"status\": \"CONFIRMED\"\r\n}\r\n"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/order-service/api/orders/{{orderId}}/status",
+              "host": [ "{{baseUrl}}" ],
+              "path": [ "order-service", "api", "orders", "{{orderId}}", "status" ]
+            }
+          }
+        },
+        {
+          "name": "Cancel order -> {{orderId}}",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/order-service/api/orders/{{orderId}}/cancel",
+              "host": [ "{{baseUrl}}" ],
+              "path": [ "order-service", "api", "orders", "{{orderId}}", "cancel" ]
+            }
+          }
+        },
+        {
+          "name": "Update payment status -> {{orderId}}",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"paymentStatus\": \"PAID\"\r\n}\r\n"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/order-service/api/orders/{{orderId}}/payment-status",
+              "host": [ "{{baseUrl}}" ],
+              "path": [ "order-service", "api", "orders", "{{orderId}}", "payment-status" ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
+
