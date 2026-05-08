@@ -8,7 +8,13 @@ function RestaurantDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const { addToCart, cartItems } = useCart();
+  const {
+    addToCart,
+    cartItems,
+    cartMessage,
+    cartMessageType,
+    clearCartMessage,
+  } = useCart();
 
   const [menuItems, setMenuItems] = useState([]);
   const [favorites, setFavorites] = useState([]);
@@ -22,6 +28,9 @@ function RestaurantDetails() {
   const [loading, setLoading] = useState(true);
   const [reviewsLoading, setReviewsLoading] = useState(true);
   const [message, setMessage] = useState("");
+  const [localCartMessage, setLocalCartMessage] = useState("");
+  const [localCartMessageType, setLocalCartMessageType] = useState("success");
+
   const [reviewMessage, setReviewMessage] = useState("");
   const [reviewMessageType, setReviewMessageType] = useState("error");
   const [submittingReview, setSubmittingReview] = useState(false);
@@ -69,14 +78,16 @@ function RestaurantDetails() {
   }, [id]);
 
   const isFavorite = (itemId) => {
-    return favorites.some((item) => item.id === itemId);
+    return favorites.some((item) => Number(item.id) === Number(itemId));
   };
 
   const toggleFavorite = (item) => {
     let updatedFavorites;
 
     if (isFavorite(item.id)) {
-      updatedFavorites = favorites.filter((fav) => fav.id !== item.id);
+      updatedFavorites = favorites.filter(
+        (fav) => Number(fav.id) !== Number(item.id)
+      );
     } else {
       updatedFavorites = [
         ...favorites,
@@ -92,7 +103,23 @@ function RestaurantDetails() {
   };
 
   const handleAddToCart = (item) => {
-    addToCart(item, id);
+    clearCartMessage();
+
+    const success = addToCart(item, id);
+
+    if (success) {
+      setLocalCartMessageType("success");
+      setLocalCartMessage(`${item.name} added to cart successfully.`);
+    } else {
+      setLocalCartMessageType("error");
+      setLocalCartMessage(
+        "You can only order from one restaurant at a time. Please clear your cart first."
+      );
+    }
+
+    setTimeout(() => {
+      setLocalCartMessage("");
+    }, 3000);
   };
 
   const handleReviewChange = (e) => {
@@ -106,6 +133,12 @@ function RestaurantDetails() {
     e.preventDefault();
 
     setReviewMessage("");
+
+    if (!user?.id) {
+      setReviewMessageType("error");
+      setReviewMessage("Please login first to add a review");
+      return;
+    }
 
     if (!reviewForm.comment.trim()) {
       setReviewMessageType("error");
@@ -219,6 +252,18 @@ function RestaurantDetails() {
         {message && (
           <div className="mb-6 text-center text-red-700 bg-red-100 rounded-lg py-3">
             {message}
+          </div>
+        )}
+
+        {(localCartMessage || cartMessage) && (
+          <div
+            className={`mb-6 text-center rounded-lg py-3 font-semibold ${
+              localCartMessageType === "success" && cartMessageType !== "error"
+                ? "text-green-700 bg-green-100"
+                : "text-red-700 bg-red-100"
+            }`}
+          >
+            {localCartMessage || cartMessage}
           </div>
         )}
 

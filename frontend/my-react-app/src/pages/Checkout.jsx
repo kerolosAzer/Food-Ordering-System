@@ -1,63 +1,159 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
-import { createOrder } from "../api/orderApi";
+import { createOrder, updatePaymentStatus } from "../api/orderApi";
+import { createPayment } from "../api/paymentApi";
 
 function Checkout() {
   const navigate = useNavigate();
 
   const { cartItems, totalPrice, clearCart } = useCart();
 
-  const [paymentMethod, setPaymentMethod] = useState("CASH");
+  const [paymentMethod, setPaymentMethod] = useState("CASH_ON_DELIVERY");
   const [message, setMessage] = useState("");
+  const [messageType, setMessageType] = useState("error");
   const [loading, setLoading] = useState(false);
 
   const user = JSON.parse(localStorage.getItem("user"));
+
+  // دي للـ Order Service
+  // order_service PaymentMethod enum: CASH, CARD
+  const getOrderPaymentMethod = () => {
+    if (paymentMethod === "VISA") {
+      return "CARD";
+    }
+
+    return "CASH";
+  };
+
+  // دي للـ Payment Service
+  // payment_service PaymentMethod enum: CASH_ON_DELIVERY, VISA
+  const getPaymentServiceMethod = () => {
+    if (paymentMethod === "VISA") {
+      return "VISA";
+    }
+
+    return "CASH_ON_DELIVERY";
+  };
+
+  // دي للـ Order Service
+  // order_service PaymentStatus enum: UNPAID, PAID, FAILED
+  const getOrderPaymentStatusAfterPayment = () => {
+    if (paymentMethod === "VISA") {
+      return "PAID";
+    }
+
+    return "UNPAID";
+  };
+
+  const validateCartRestaurant = () => {
+    if (cartItems.length === 0) {
+      return true;
+    }
+
+    const firstRestaurantId = Number(cartItems[0].restaurantId);
+
+    return cartItems.every(
+      (item) => Number(item.restaurantId) === firstRestaurantId
+    );
+  };
 
   const handlePlaceOrder = async () => {
     setMessage("");
 
     if (!user?.id) {
+      setMessageType("error");
       setMessage("Please login first");
       return;
     }
 
     if (cartItems.length === 0) {
+      setMessageType("error");
       setMessage("Your cart is empty");
       return;
     }
 
-    const restaurantId = cartItems[0].restaurantId;
+    if (!validateCartRestaurant()) {
+      setMessageType("error");
+      setMessage(
+        "Your cart contains items from different restaurants. Please clear your cart and order from one restaurant only."
+      );
+      return;
+    }
+
+    const restaurantId = Number(cartItems[0].restaurantId);
+
+    if (!restaurantId) {
+      setMessageType("error");
+      setMessage("Restaurant ID is missing. Please go back and add items again.");
+      return;
+    }
+
+    const orderPaymentMethod = getOrderPaymentMethod();
+    const paymentServiceMethod = getPaymentServiceMethod();
 
     const orderData = {
-      customerId: user.id,
+      customerId: Number(user.id),
+      customerName: user.name,
       restaurantId: restaurantId,
-      paymentMethod: paymentMethod,
+      paymentMethod: orderPaymentMethod,
       items: cartItems.map((item) => ({
-        menuItemId: item.id,
-        quantity: item.quantity,
+        menuItemId: Number(item.id),
+        quantity: Number(item.quantity),
       })),
     };
 
     try {
       setLoading(true);
 
-      const data = await createOrder(orderData);
+      console.log("Order request:", orderData);
 
-      console.log("Order created:", data);
+      const createdOrder = await createOrder(orderData);
+
+      console.log("Order created:", createdOrder);
+
+      const paymentData = {
+        orderId: createdOrder.id,
+        paymentMethod: paymentServiceMethod,
+        amount: Number(totalPrice),
+      };
+
+      console.log("Payment request:", paymentData);
+
+      const createdPayment = await createPayment(paymentData);
+
+      console.log("Payment created:", createdPayment);
+
+      const newOrderPaymentStatus = getOrderPaymentStatusAfterPayment();
+
+      const updatedOrder = await updatePaymentStatus(
+        createdOrder.id,
+        newOrderPaymentStatus
+      );
+
+      console.log("Order payment status updated:", updatedOrder);
 
       clearCart();
-      setMessage("Order placed successfully");
+
+      setMessageType("success");
+      setMessage(
+        paymentMethod === "VISA"
+          ? "Order placed successfully. Visa payment is confirmed."
+          : "Order placed successfully. Payment is pending until delivery."
+      );
 
       setTimeout(() => {
         navigate("/my-orders");
-      }, 1000);
+      }, 1200);
     } catch (error) {
-      console.error(
-        "Create order error:",
-        error.response?.data || error.message
+      console.error("Checkout error:", error.response?.data || error.message);
+
+      setMessageType("error");
+      setMessage(
+        error.response?.data?.message ||
+          error.response?.data ||
+          "Failed to place order or create payment"
       );
-      setMessage(error.response?.data?.message || "Failed to place order");
     } finally {
       setLoading(false);
     }
@@ -89,7 +185,13 @@ function Checkout() {
         </h1>
 
         {message && (
-          <div className="mb-6 text-center text-sm font-medium text-orange-700 bg-orange-100 rounded-lg py-3">
+          <div
+            className={`mb-6 text-center text-sm font-semibold rounded-lg py-3 ${
+              messageType === "success"
+                ? "text-green-700 bg-green-100"
+                : "text-red-700 bg-red-100"
+            }`}
+          >
             {message}
           </div>
         )}
@@ -112,10 +214,14 @@ function Checkout() {
                 Order Summary
               </h2>
 
+              <div className="mb-5 bg-orange-50 text-orange-700 rounded-xl px-4 py-3 text-sm font-semibold">
+                Restaurant ID: {cartItems[0].restaurantId}
+              </div>
+
               <div className="space-y-4">
                 {cartItems.map((item) => (
                   <div
-                    key={item.id}
+                    key={`${item.restaurantId}-${item.id}`}
                     className="flex items-center justify-between gap-4 border-b border-gray-100 pb-4"
                   >
                     <div className="flex items-center gap-4">
@@ -150,7 +256,7 @@ function Checkout() {
                     </div>
 
                     <p className="font-bold text-orange-600">
-                      {item.price * item.quantity} EGP
+                      {Number(item.price) * Number(item.quantity)} EGP
                     </p>
                   </div>
                 ))}
@@ -171,9 +277,23 @@ function Checkout() {
                 onChange={(e) => setPaymentMethod(e.target.value)}
                 className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:ring-2 focus:ring-orange-400"
               >
-                <option value="CASH">Cash</option>
-                <option value="CARD">Card</option>
+                <option value="CASH_ON_DELIVERY">Cash on Delivery</option>
+                <option value="VISA">Visa Simulated</option>
               </select>
+
+              <div className="mt-4 bg-orange-50 rounded-2xl p-4 text-sm text-gray-600">
+                {paymentMethod === "VISA" ? (
+                  <p>
+                    Visa payment is simulated only. No real payment gateway will
+                    be used. Payment will be marked as confirmed.
+                  </p>
+                ) : (
+                  <p>
+                    Cash on Delivery will be marked as pending until the order is
+                    delivered.
+                  </p>
+                )}
+              </div>
 
               <div className="mt-6 flex items-center justify-between border-t pt-5">
                 <span className="text-xl font-bold text-gray-800">Total</span>

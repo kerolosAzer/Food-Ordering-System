@@ -47,6 +47,16 @@ function AdminDashboard() {
     (order) => order.orderStatus === "PENDING"
   ).length;
 
+  const deliveredOrders = orders.filter(
+    (order) => order.orderStatus === "DELIVERED"
+  ).length;
+
+  const cancelledOrders = orders.filter(
+    (order) => order.orderStatus === "CANCELLED"
+  ).length;
+
+  const deliveryUsers = users.filter((user) => user.role === "DELIVERY").length;
+
   const totalSales = orders
     .filter((order) => order.orderStatus !== "CANCELLED")
     .reduce((total, order) => total + Number(order.totalPrice || 0), 0);
@@ -63,7 +73,7 @@ function AdminDashboard() {
       bg: "bg-orange-50",
     },
     {
-      title: "Total Restaurants",
+      title: "Restaurants",
       value: restaurants.length,
       icon: "🏪",
       bg: "bg-blue-50",
@@ -75,16 +85,22 @@ function AdminDashboard() {
       bg: "bg-purple-50",
     },
     {
-      title: "Pending Orders",
+      title: "Pending",
       value: pendingOrders,
       icon: "⏱️",
       bg: "bg-yellow-50",
     },
     {
-      title: "Total Sales",
-      value: `${totalSales} EGP`,
-      icon: "📊",
+      title: "Delivered",
+      value: deliveredOrders,
+      icon: "✅",
       bg: "bg-green-50",
+    },
+    {
+      title: "Delivery Users",
+      value: deliveryUsers,
+      icon: "🚚",
+      bg: "bg-orange-50",
     },
   ];
 
@@ -107,6 +123,19 @@ function AdminDashboard() {
     }
   };
 
+  const getPaymentStyle = (paymentStatus) => {
+    switch (paymentStatus) {
+      case "PAID":
+        return "text-green-700 bg-green-100";
+      case "UNPAID":
+        return "text-yellow-700 bg-yellow-100";
+      case "FAILED":
+        return "text-red-700 bg-red-100";
+      default:
+        return "text-gray-700 bg-gray-100";
+    }
+  };
+
   return (
     <AdminLayout title="Dashboard">
       {loading ? (
@@ -123,7 +152,7 @@ function AdminDashboard() {
             </div>
           )}
 
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-6 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-6 gap-6 mb-8">
             {stats.map((stat) => (
               <div
                 key={stat.title}
@@ -150,45 +179,124 @@ function AdminDashboard() {
             ))}
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <button
-              onClick={() => navigate("/admin/add-restaurant")}
-              className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 text-left hover:shadow-lg hover:-translate-y-1 transition duration-300"
-            >
-              <div className="text-4xl mb-4">🏪</div>
-              <h3 className="text-xl font-bold text-gray-900">
-                Add Restaurant
-              </h3>
-              <p className="text-gray-500 mt-2">
-                Create a new restaurant with image and contact details.
-              </p>
-            </button>
+          <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 mb-8">
+            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-6">
+              <div>
+                <h3 className="text-xl font-bold text-gray-900">
+                  Quick Actions
+                </h3>
+                <p className="text-sm text-gray-500 mt-1">
+                  Navigate quickly to the main admin operations.
+                </p>
+              </div>
 
-            <button
-              onClick={() => navigate("/admin/add-menu-item")}
-              className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 text-left hover:shadow-lg hover:-translate-y-1 transition duration-300"
-            >
-              <div className="text-4xl mb-4">🍕</div>
-              <h3 className="text-xl font-bold text-gray-900">
-                Add Menu Item
-              </h3>
-              <p className="text-gray-500 mt-2">
-                Add food items to restaurants with price and image.
-              </p>
-            </button>
+              <div className="bg-green-50 text-green-700 px-4 py-2 rounded-xl font-bold">
+                Total Sales: {totalSales} EGP
+              </div>
+            </div>
 
-            <button
-              onClick={() => navigate("/admin/restaurants")}
-              className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 text-left hover:shadow-lg hover:-translate-y-1 transition duration-300"
-            >
-              <div className="text-4xl mb-4">📋</div>
-              <h3 className="text-xl font-bold text-gray-900">
-                Manage Restaurants
-              </h3>
-              <p className="text-gray-500 mt-2">
-                View restaurants and their menu items.
-              </p>
-            </button>
+            <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-6 gap-6">
+              <button
+                onClick={() => navigate("/admin/add-restaurant")}
+                className="bg-gray-50 rounded-2xl p-5 border border-gray-100 text-left hover:bg-orange-50 hover:shadow-lg hover:-translate-y-1 transition duration-300"
+              >
+                <div className="text-4xl mb-4">🏪</div>
+                <h3 className="text-lg font-bold text-gray-900">
+                  Add Restaurant
+                </h3>
+                <p className="text-gray-500 mt-2 text-sm">
+                  Create a new restaurant.
+                </p>
+              </button>
+
+              <button
+                onClick={() => navigate("/admin/add-menu-item")}
+                className="bg-gray-50 rounded-2xl p-5 border border-gray-100 text-left hover:bg-orange-50 hover:shadow-lg hover:-translate-y-1 transition duration-300"
+              >
+                <div className="text-4xl mb-4">🍕</div>
+                <h3 className="text-lg font-bold text-gray-900">
+                  Add Menu Item
+                </h3>
+                <p className="text-gray-500 mt-2 text-sm">
+                  Add food items.
+                </p>
+              </button>
+
+              <button
+                onClick={() => navigate("/admin/restaurants")}
+                className="bg-gray-50 rounded-2xl p-5 border border-gray-100 text-left hover:bg-orange-50 hover:shadow-lg hover:-translate-y-1 transition duration-300"
+              >
+                <div className="text-4xl mb-4">📋</div>
+                <h3 className="text-lg font-bold text-gray-900">
+                  Restaurants
+                </h3>
+                <p className="text-gray-500 mt-2 text-sm">
+                  Manage restaurants.
+                </p>
+              </button>
+
+              <button
+                onClick={() => navigate("/admin/orders")}
+                className="bg-gray-50 rounded-2xl p-5 border border-gray-100 text-left hover:bg-orange-50 hover:shadow-lg hover:-translate-y-1 transition duration-300"
+              >
+                <div className="text-4xl mb-4">📦</div>
+                <h3 className="text-lg font-bold text-gray-900">
+                  Orders
+                </h3>
+                <p className="text-gray-500 mt-2 text-sm">
+                  Manage all orders.
+                </p>
+              </button>
+
+              <button
+                onClick={() => navigate("/admin/assign-delivery")}
+                className="bg-gray-50 rounded-2xl p-5 border border-gray-100 text-left hover:bg-orange-50 hover:shadow-lg hover:-translate-y-1 transition duration-300"
+              >
+                <div className="text-4xl mb-4">🚚</div>
+                <h3 className="text-lg font-bold text-gray-900">
+                  Assign Delivery
+                </h3>
+                <p className="text-gray-500 mt-2 text-sm">
+                  Assign orders.
+                </p>
+              </button>
+
+              <button
+                onClick={() => navigate("/admin/logs")}
+                className="bg-gray-50 rounded-2xl p-5 border border-gray-100 text-left hover:bg-orange-50 hover:shadow-lg hover:-translate-y-1 transition duration-300"
+              >
+                <div className="text-4xl mb-4">🧾</div>
+                <h3 className="text-lg font-bold text-gray-900">
+                  System Logs
+                </h3>
+                <p className="text-gray-500 mt-2 text-sm">
+                  View AOP logs.
+                </p>
+              </button>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 mb-8">
+            <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+              <p className="text-gray-500 text-sm">Cancelled Orders</p>
+              <h2 className="text-3xl font-extrabold text-red-600 mt-1">
+                {cancelledOrders}
+              </h2>
+            </div>
+
+            <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+              <p className="text-gray-500 text-sm">Paid Orders</p>
+              <h2 className="text-3xl font-extrabold text-green-600 mt-1">
+                {orders.filter((o) => o.paymentStatus === "PAID").length}
+              </h2>
+            </div>
+
+            <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+              <p className="text-gray-500 text-sm">Unpaid Orders</p>
+              <h2 className="text-3xl font-extrabold text-yellow-600 mt-1">
+                {orders.filter((o) => o.paymentStatus === "UNPAID").length}
+              </h2>
+            </div>
           </div>
 
           <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
@@ -235,7 +343,10 @@ function AdminDashboard() {
                         Payment
                       </th>
                       <th className="px-6 py-4 text-sm font-bold text-gray-600">
-                        Status
+                        Payment Status
+                      </th>
+                      <th className="px-6 py-4 text-sm font-bold text-gray-600">
+                        Order Status
                       </th>
                     </tr>
                   </thead>
@@ -264,6 +375,16 @@ function AdminDashboard() {
 
                         <td className="px-6 py-4 text-gray-600">
                           {order.paymentMethod}
+                        </td>
+
+                        <td className="px-6 py-4">
+                          <span
+                            className={`px-3 py-1 rounded-full text-xs font-bold ${getPaymentStyle(
+                              order.paymentStatus
+                            )}`}
+                          >
+                            {order.paymentStatus}
+                          </span>
                         </td>
 
                         <td className="px-6 py-4">

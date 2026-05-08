@@ -12,6 +12,15 @@ function AdminOrders() {
   const [message, setMessage] = useState("");
   const [messageType, setMessageType] = useState("error");
 
+  const orderStatusOptions = [
+    { value: "PENDING", label: "Pending" },
+    { value: "CONFIRMED", label: "Confirmed" },
+    { value: "PREPARING", label: "Preparing" },
+    { value: "OUT_FOR_DELIVERY", label: "Out For Delivery" },
+    { value: "DELIVERED", label: "Delivered" },
+    { value: "CANCELLED", label: "Cancelled" },
+  ];
+
   const fetchOrders = async () => {
     try {
       setLoading(true);
@@ -51,9 +60,28 @@ function AdminOrders() {
     }
   };
 
+  const getPaymentStyle = (paymentStatus) => {
+    switch (paymentStatus) {
+      case "PAID":
+        return "text-green-700 bg-green-100";
+      case "UNPAID":
+        return "text-yellow-700 bg-yellow-100";
+      case "FAILED":
+        return "text-red-700 bg-red-100";
+      default:
+        return "text-gray-700 bg-gray-100";
+    }
+  };
+
+  const formatStatusLabel = (status) => {
+    const found = orderStatusOptions.find((option) => option.value === status);
+    return found ? found.label : status;
+  };
+
   const handleViewOrder = (order) => {
     setSelectedOrder(order);
     setNewStatus(order.orderStatus);
+    setMessage("");
   };
 
   const handleCloseModal = () => {
@@ -61,8 +89,18 @@ function AdminOrders() {
     setNewStatus("");
   };
 
+  const cannotUpdateSelectedOrder =
+    selectedOrder?.orderStatus === "DELIVERED" ||
+    selectedOrder?.orderStatus === "CANCELLED";
+
   const handleUpdateStatus = async () => {
     if (!selectedOrder || !newStatus) return;
+
+    if (newStatus === selectedOrder.orderStatus) {
+      setMessageType("error");
+      setMessage("Please choose a different status before saving.");
+      return;
+    }
 
     try {
       setActionLoading(true);
@@ -85,7 +123,10 @@ function AdminOrders() {
   };
 
   const handleCancelOrder = async (orderId) => {
-    const confirmCancel = window.confirm("Are you sure you want to cancel this order?");
+    const confirmCancel = window.confirm(
+      "Are you sure you want to cancel this order?"
+    );
+
     if (!confirmCancel) return;
 
     try {
@@ -117,6 +158,10 @@ function AdminOrders() {
     (a, b) => Number(b.id) - Number(a.id)
   );
 
+  const pendingCount = orders.filter((o) => o.orderStatus === "PENDING").length;
+  const deliveredCount = orders.filter((o) => o.orderStatus === "DELIVERED").length;
+  const cancelledCount = orders.filter((o) => o.orderStatus === "CANCELLED").length;
+
   return (
     <AdminLayout title="Manage Orders">
       {loading ? (
@@ -138,21 +183,21 @@ function AdminOrders() {
             <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
               <p className="text-gray-500 text-sm">Pending</p>
               <h2 className="text-3xl font-extrabold text-yellow-600 mt-1">
-                {orders.filter((o) => o.orderStatus === "PENDING").length}
+                {pendingCount}
               </h2>
             </div>
 
             <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
               <p className="text-gray-500 text-sm">Delivered</p>
               <h2 className="text-3xl font-extrabold text-green-600 mt-1">
-                {orders.filter((o) => o.orderStatus === "DELIVERED").length}
+                {deliveredCount}
               </h2>
             </div>
 
             <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
               <p className="text-gray-500 text-sm">Cancelled</p>
               <h2 className="text-3xl font-extrabold text-red-600 mt-1">
-                {orders.filter((o) => o.orderStatus === "CANCELLED").length}
+                {cancelledCount}
               </h2>
             </div>
           </div>
@@ -181,15 +226,14 @@ function AdminOrders() {
               <select
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
-                className="rounded-xl border border-gray-200 px-4 py-3 outline-none focus:ring-2 focus:ring-orange-400"
+                className="rounded-xl border border-gray-200 px-4 py-3 outline-none focus:ring-2 focus:ring-orange-400 bg-white"
               >
                 <option value="ALL">All Status</option>
-                <option value="PENDING">Pending</option>
-                <option value="CONFIRMED">Confirmed</option>
-                <option value="PREPARING">Preparing</option>
-                <option value="OUT_FOR_DELIVERY">Out For Delivery</option>
-                <option value="DELIVERED">Delivered</option>
-                <option value="CANCELLED">Cancelled</option>
+                {orderStatusOptions.map((status) => (
+                  <option key={status.value} value={status.value}>
+                    {status.label}
+                  </option>
+                ))}
               </select>
             </div>
 
@@ -280,7 +324,7 @@ function AdminOrders() {
 
           {selectedOrder && (
             <div className="fixed inset-0 bg-black/40 z-[100] flex items-center justify-center px-4">
-              <div className="bg-white rounded-3xl shadow-2xl max-w-3xl w-full p-6 relative">
+              <div className="bg-white rounded-3xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto p-7 relative">
                 <button
                   onClick={handleCloseModal}
                   className="absolute top-5 right-5 text-gray-400 hover:text-red-600 text-xl"
@@ -288,13 +332,15 @@ function AdminOrders() {
                   ✕
                 </button>
 
-                <h2 className="text-2xl font-extrabold text-gray-900 mb-1">
-                  Order #{selectedOrder.id}
-                </h2>
+                <div className="mb-6 pr-10">
+                  <h2 className="text-2xl font-extrabold text-gray-900">
+                    Order #{selectedOrder.id}
+                  </h2>
 
-                <p className="text-gray-500 mb-6">
-                  View order details and update order status.
-                </p>
+                  <p className="text-gray-500 mt-1">
+                    View order details and update order status.
+                  </p>
+                </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                   <div className="bg-gray-50 rounded-2xl p-4">
@@ -320,8 +366,30 @@ function AdminOrders() {
 
                   <div className="bg-gray-50 rounded-2xl p-4">
                     <p className="text-sm text-gray-500">Payment Status</p>
-                    <p className="font-bold text-gray-900">
+                    <span
+                      className={`inline-block mt-1 px-3 py-1 rounded-full text-xs font-bold ${getPaymentStyle(
+                        selectedOrder.paymentStatus
+                      )}`}
+                    >
                       {selectedOrder.paymentStatus}
+                    </span>
+                  </div>
+
+                  <div className="bg-gray-50 rounded-2xl p-4">
+                    <p className="text-sm text-gray-500">Current Order Status</p>
+                    <span
+                      className={`inline-block mt-1 px-3 py-1 rounded-full text-xs font-bold ${getStatusStyle(
+                        selectedOrder.orderStatus
+                      )}`}
+                    >
+                      {selectedOrder.orderStatus}
+                    </span>
+                  </div>
+
+                  <div className="bg-gray-50 rounded-2xl p-4">
+                    <p className="text-sm text-gray-500">Total Price</p>
+                    <p className="font-bold text-orange-600">
+                      {selectedOrder.totalPrice} EGP
                     </p>
                   </div>
                 </div>
@@ -329,70 +397,70 @@ function AdminOrders() {
                 <div className="mb-6">
                   <h3 className="font-bold text-gray-900 mb-3">Items</h3>
 
-                  <div className="space-y-2 max-h-48 overflow-y-auto pr-1">
-                    {selectedOrder.items?.map((item) => (
-                      <div
-                        key={item.id}
-                        className="grid grid-cols-4 gap-3 bg-orange-50 rounded-xl px-4 py-3 text-sm"
-                      >
-                        <p>
-                          <span className="font-semibold">Menu:</span>{" "}
-                          {item.menuItemId}
-                        </p>
+                  {selectedOrder.items?.length > 0 ? (
+                    <div className="space-y-2 max-h-56 overflow-y-auto pr-1">
+                      {selectedOrder.items.map((item) => (
+                        <div
+                          key={item.id}
+                          className="grid grid-cols-1 md:grid-cols-4 gap-3 bg-orange-50 rounded-xl px-4 py-3 text-sm"
+                        >
+                          <p>
+                            <span className="font-semibold">Menu:</span>{" "}
+                            {item.menuItemId}
+                          </p>
 
-                        <p>
-                          <span className="font-semibold">Qty:</span>{" "}
-                          {item.quantity}
-                        </p>
+                          <p>
+                            <span className="font-semibold">Qty:</span>{" "}
+                            {item.quantity}
+                          </p>
 
-                        <p>
-                          <span className="font-semibold">Price:</span>{" "}
-                          {item.price}
-                        </p>
+                          <p>
+                            <span className="font-semibold">Price:</span>{" "}
+                            {item.price}
+                          </p>
 
-                        <p className="font-bold text-orange-600">
-                          {item.price * item.quantity} EGP
-                        </p>
-                      </div>
-                    ))}
-                  </div>
+                          <p className="font-bold text-orange-600">
+                            {Number(item.price) * Number(item.quantity)} EGP
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="bg-gray-50 rounded-xl p-4 text-gray-500">
+                      No items found for this order.
+                    </div>
+                  )}
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-end">
-                  <div>
-                    <label className="block text-sm font-bold text-gray-700 mb-2">
-                      Update Status
-                    </label>
+                <div className="border-t border-gray-100 pt-5">
+                  <label className="block text-sm font-bold text-gray-700 mb-2">
+                    Update Status
+                  </label>
 
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <select
                       value={newStatus}
                       onChange={(e) => setNewStatus(e.target.value)}
-                      className="w-full rounded-xl border border-gray-200 px-4 py-3 outline-none focus:ring-2 focus:ring-orange-400"
-                      disabled={
-                        selectedOrder.orderStatus === "DELIVERED" ||
-                        selectedOrder.orderStatus === "CANCELLED"
-                      }
+                      className="md:col-span-1 w-full rounded-xl border border-orange-300 px-4 py-3 outline-none focus:ring-2 focus:ring-orange-400 bg-white"
+                      disabled={cannotUpdateSelectedOrder}
                     >
-                      <option value="PENDING">Pending</option>
-                      <option value="CONFIRMED">Confirmed</option>
-                      <option value="PREPARING">Preparing</option>
-                      <option value="OUT_FOR_DELIVERY">Out For Delivery</option>
-                      <option value="DELIVERED">Delivered</option>
-                      <option value="CANCELLED">Cancelled</option>
+                      {orderStatusOptions.map((status) => (
+                        <option key={status.value} value={status.value}>
+                          {status.label}
+                        </option>
+                      ))}
                     </select>
-                  </div>
 
-                  <div className="flex gap-3">
                     <button
                       onClick={handleUpdateStatus}
                       disabled={
                         actionLoading ||
-                        selectedOrder.orderStatus === "DELIVERED" ||
-                        selectedOrder.orderStatus === "CANCELLED"
+                        cannotUpdateSelectedOrder ||
+                        newStatus === selectedOrder.orderStatus
                       }
-                      className="flex-1 bg-orange-600 text-white py-3 rounded-xl font-bold hover:bg-orange-700 disabled:bg-orange-300 transition"
+                      className="bg-orange-600 text-white py-3 rounded-xl font-bold hover:bg-orange-700 disabled:bg-orange-300 transition"
                     >
-                      {actionLoading ? "Saving..." : "Save"}
+                      {actionLoading ? "Saving..." : "Save Status"}
                     </button>
 
                     {selectedOrder.orderStatus !== "DELIVERED" &&
@@ -400,12 +468,19 @@ function AdminOrders() {
                         <button
                           onClick={() => handleCancelOrder(selectedOrder.id)}
                           disabled={actionLoading}
-                          className="flex-1 bg-white border border-red-300 text-red-600 py-3 rounded-xl font-bold hover:bg-red-50 disabled:opacity-60 transition"
+                          className="bg-white border border-red-300 text-red-600 py-3 rounded-xl font-bold hover:bg-red-50 disabled:opacity-60 transition"
                         >
-                          Cancel
+                          Cancel Order
                         </button>
                       )}
                   </div>
+
+                  {cannotUpdateSelectedOrder && (
+                    <p className="mt-3 text-sm text-gray-500">
+                      This order cannot be updated because it is already{" "}
+                      {formatStatusLabel(selectedOrder.orderStatus)}.
+                    </p>
+                  )}
                 </div>
               </div>
             </div>

@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Navbar from "../components/Navbar";
 import { getOrdersByCustomerId, cancelOrder } from "../api/orderApi";
+import { getDeliveryByOrderId } from "../api/deliveryApi";
 import { useCart } from "../context/CartContext";
 
 function MyOrders() {
@@ -8,6 +10,7 @@ function MyOrders() {
   const { addToCart } = useCart();
 
   const [orders, setOrders] = useState([]);
+  const [deliveriesByOrder, setDeliveriesByOrder] = useState({});
   const [statusFilter, setStatusFilter] = useState("ALL");
   const [expandedOrderId, setExpandedOrderId] = useState(null);
   const [message, setMessage] = useState("");
@@ -19,6 +22,8 @@ function MyOrders() {
 
   const fetchOrders = async () => {
     try {
+      setLoading(true);
+
       if (!user?.id) {
         setMessageType("error");
         setMessage("Please login first");
@@ -28,6 +33,21 @@ function MyOrders() {
 
       const data = await getOrdersByCustomerId(user.id);
       setOrders(data);
+
+      const deliveryMap = {};
+
+      await Promise.all(
+        data.map(async (order) => {
+          try {
+            const delivery = await getDeliveryByOrderId(order.id);
+            deliveryMap[order.id] = delivery;
+          } catch (error) {
+            deliveryMap[order.id] = null;
+          }
+        })
+      );
+
+      setDeliveriesByOrder(deliveryMap);
     } catch (error) {
       console.error("My orders error:", error.response?.data || error.message);
       setMessageType("error");
@@ -61,6 +81,73 @@ function MyOrders() {
     }
   };
 
+  const getDeliveryStatusStyle = (status) => {
+    switch (status) {
+      case "ASSIGNED":
+        return "bg-blue-100 text-blue-700";
+      case "PICKED_UP":
+        return "bg-purple-100 text-purple-700";
+      case "OUT_FOR_DELIVERY":
+        return "bg-orange-100 text-orange-700";
+      case "DELIVERED":
+        return "bg-green-100 text-green-700";
+      case "FAILED":
+        return "bg-red-100 text-red-700";
+      default:
+        return "bg-gray-100 text-gray-700";
+    }
+  };
+
+  const getTrackingSteps = (order, delivery) => {
+    return [
+      {
+        label: "Order Placed",
+        completed: true,
+      },
+      {
+        label: "Confirmed",
+        completed: [
+          "CONFIRMED",
+          "PREPARING",
+          "OUT_FOR_DELIVERY",
+          "DELIVERED",
+        ].includes(order.orderStatus),
+      },
+      {
+        label: "Preparing",
+        completed: ["PREPARING", "OUT_FOR_DELIVERY", "DELIVERED"].includes(
+          order.orderStatus
+        ),
+      },
+      {
+        label: "Assigned",
+        completed: Boolean(delivery),
+      },
+      {
+        label: "Picked Up",
+        completed: [
+          "PICKED_UP",
+          "OUT_FOR_DELIVERY",
+          "DELIVERED",
+        ].includes(delivery?.deliveryStatus),
+      },
+      {
+        label: "Out For Delivery",
+        completed:
+          order.orderStatus === "OUT_FOR_DELIVERY" ||
+          order.orderStatus === "DELIVERED" ||
+          delivery?.deliveryStatus === "OUT_FOR_DELIVERY" ||
+          delivery?.deliveryStatus === "DELIVERED",
+      },
+      {
+        label: "Delivered",
+        completed:
+          order.orderStatus === "DELIVERED" ||
+          delivery?.deliveryStatus === "DELIVERED",
+      },
+    ];
+  };
+
   const canCancelOrder = (status) => {
     return ["PENDING", "CONFIRMED", "PREPARING"].includes(status);
   };
@@ -70,7 +157,9 @@ function MyOrders() {
   };
 
   const handleCancelOrder = async (orderId) => {
-    const confirmCancel = window.confirm("Are you sure you want to cancel this order?");
+    const confirmCancel = window.confirm(
+      "Are you sure you want to cancel this order?"
+    );
 
     if (!confirmCancel) return;
 
@@ -138,39 +227,7 @@ function MyOrders() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-orange-100">
-      <nav className="sticky top-0 z-50 bg-white/75 backdrop-blur-md border-b border-orange-100 shadow-sm">
-        <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-          <button
-            onClick={() => navigate("/home")}
-            className="text-2xl font-bold text-orange-600 hover:text-orange-700 hover:-translate-y-0.5 transition duration-300"
-          >
-            Food Ordering
-          </button>
-
-          <div className="flex items-center gap-3">
-            <button
-              onClick={() => navigate("/restaurants")}
-              className="bg-white text-orange-600 border border-orange-600 px-4 py-2 rounded-lg font-semibold hover:bg-orange-50 hover:-translate-y-0.5 hover:shadow-md active:scale-95 transition duration-300"
-            >
-              Restaurants
-            </button>
-
-            <button
-              onClick={() => navigate("/cart")}
-              className="bg-orange-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-orange-700 hover:-translate-y-0.5 hover:shadow-lg active:scale-95 transition duration-300"
-            >
-              Cart
-            </button>
-
-            <button
-              onClick={() => navigate("/home")}
-              className="bg-white text-orange-600 border border-orange-600 px-4 py-2 rounded-lg font-semibold hover:bg-orange-50 hover:-translate-y-0.5 hover:shadow-md active:scale-95 transition duration-300"
-            >
-              Home
-            </button>
-          </div>
-        </div>
-      </nav>
+      <Navbar />
 
       <div className="max-w-6xl mx-auto px-6 py-12">
         <div className="text-center mb-8">
@@ -250,6 +307,7 @@ function MyOrders() {
           <div className="space-y-6">
             {filteredOrders.map((order) => {
               const isExpanded = expandedOrderId === order.id;
+              const delivery = deliveriesByOrder[order.id];
 
               return (
                 <div
@@ -268,6 +326,23 @@ function MyOrders() {
 
                       <p className="text-gray-500 mt-1">
                         Date: {order.orderDate || order.createdAt || "No date"}
+                      </p>
+
+                      <p className="text-gray-500 mt-1">
+                        Delivery:{" "}
+                        {delivery ? (
+                          <span
+                            className={`inline-block px-3 py-1 rounded-full text-xs font-bold ${getDeliveryStatusStyle(
+                              delivery.deliveryStatus
+                            )}`}
+                          >
+                            {delivery.deliveryStatus}
+                          </span>
+                        ) : (
+                          <span className="font-semibold text-gray-600">
+                            Not assigned yet
+                          </span>
+                        )}
                       </p>
                     </div>
 
@@ -321,6 +396,28 @@ function MyOrders() {
                   {isExpanded && (
                     <div className="mt-6 bg-orange-50 rounded-2xl p-5">
                       <h3 className="font-bold text-gray-800 mb-4 text-lg">
+                        Order Tracking
+                      </h3>
+
+                      <div className="grid grid-cols-1 md:grid-cols-7 gap-3 mb-6">
+                        {getTrackingSteps(order, delivery).map((step) => (
+                          <div
+                            key={step.label}
+                            className={`rounded-xl p-3 text-center text-sm font-bold ${
+                              step.completed
+                                ? "bg-green-100 text-green-700"
+                                : "bg-white text-gray-400"
+                            }`}
+                          >
+                            <div className="text-xl mb-1">
+                              {step.completed ? "✓" : "○"}
+                            </div>
+                            {step.label}
+                          </div>
+                        ))}
+                      </div>
+
+                      <h3 className="font-bold text-gray-800 mb-4 text-lg">
                         Order Details
                       </h3>
 
@@ -358,11 +455,55 @@ function MyOrders() {
                             {order.paymentStatus}
                           </p>
                         </div>
+
+                        <div className="bg-white rounded-xl p-4">
+                          <p className="text-gray-500 text-sm">
+                            Delivery User
+                          </p>
+                          <p className="font-bold text-gray-800">
+                            {delivery
+                              ? `${delivery.deliveryUserName || "Unknown"} #${
+                                  delivery.deliveryUserId
+                                }`
+                              : "Not assigned yet"}
+                          </p>
+                        </div>
+
+                        <div className="bg-white rounded-xl p-4">
+                          <p className="text-gray-500 text-sm">
+                            Delivery Status
+                          </p>
+                          {delivery ? (
+                            <span
+                              className={`inline-block mt-1 px-3 py-1 rounded-full text-xs font-bold ${getDeliveryStatusStyle(
+                                delivery.deliveryStatus
+                              )}`}
+                            >
+                              {delivery.deliveryStatus}
+                            </span>
+                          ) : (
+                            <p className="font-bold text-gray-800">
+                              Not assigned yet
+                            </p>
+                          )}
+                        </div>
+
+                        <div className="bg-white rounded-xl p-4">
+                          <p className="text-gray-500 text-sm">Assigned At</p>
+                          <p className="font-bold text-gray-800">
+                            {delivery?.assignedAt || "Not assigned yet"}
+                          </p>
+                        </div>
+
+                        <div className="bg-white rounded-xl p-4">
+                          <p className="text-gray-500 text-sm">Updated At</p>
+                          <p className="font-bold text-gray-800">
+                            {delivery?.updatedAt || "Not updated yet"}
+                          </p>
+                        </div>
                       </div>
 
-                      <h4 className="font-bold text-gray-800 mb-3">
-                        Items
-                      </h4>
+                      <h4 className="font-bold text-gray-800 mb-3">Items</h4>
 
                       <div className="space-y-2">
                         {order.items?.map((item) => (
@@ -394,9 +535,7 @@ function MyOrders() {
 
                       <div className="mt-5 flex justify-end">
                         <div className="bg-white rounded-xl px-6 py-4">
-                          <p className="text-gray-500 text-sm">
-                            Total Price
-                          </p>
+                          <p className="text-gray-500 text-sm">Total Price</p>
                           <p className="text-2xl font-extrabold text-orange-600">
                             {order.totalPrice} EGP
                           </p>

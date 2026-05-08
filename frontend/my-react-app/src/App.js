@@ -9,17 +9,23 @@ import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 import Favorites from "./pages/Favorites";
 import MyOrders from "./pages/MyOrders";
+
 import AdminDashboard from "./pages/AdminDashboard";
 import AddRestaurant from "./pages/AddRestaurant";
 import AddMenuItem from "./pages/AddMenuItem";
-
-import ProtectedRoute from "./routes/ProtectedRoute";
-import AdminRoute from "./routes/AdminRoute";
-import { CartProvider } from "./context/CartContext";
 import AdminRestaurants from "./pages/AdminRestaurants";
 import AdminOrders from "./pages/AdminOrders";
 import AdminUsers from "./pages/AdminUsers";
 import AdminProfile from "./pages/AdminProfile";
+import AdminSystemLogs from "./pages/AdminSystemLogs";
+import AdminAssignDelivery from "./pages/AdminAssignDelivery";
+
+import DeliveryOrders from "./pages/DeliveryOrders";
+import DeliveryDashboard from "./pages/DeliveryDashboard";
+
+import ProtectedRoute from "./routes/ProtectedRoute";
+import AdminRoute from "./routes/AdminRoute";
+import { CartProvider } from "./context/CartContext";
 
 function App() {
   return (
@@ -31,7 +37,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
 
-          {/* Protected User Routes */}
+          {/* Protected General Routes */}
           <Route
             path="/home"
             element={
@@ -98,6 +104,11 @@ function App() {
           {/* Admin Routes */}
           <Route
             path="/admin"
+            element={<Navigate to="/admin/dashboard" replace />}
+          />
+
+          <Route
+            path="/admin/dashboard"
             element={
               <AdminRoute>
                 <AdminDashboard />
@@ -122,7 +133,8 @@ function App() {
               </AdminRoute>
             }
           />
-            <Route
+
+          <Route
             path="/admin/restaurants"
             element={
               <AdminRoute>
@@ -130,6 +142,7 @@ function App() {
               </AdminRoute>
             }
           />
+
           <Route
             path="/admin/orders"
             element={
@@ -138,6 +151,7 @@ function App() {
               </AdminRoute>
             }
           />
+
           <Route
             path="/admin/users"
             element={
@@ -146,12 +160,50 @@ function App() {
               </AdminRoute>
             }
           />
+
           <Route
             path="/admin/profile"
             element={
               <AdminRoute>
                 <AdminProfile />
               </AdminRoute>
+            }
+          />
+
+          <Route
+            path="/admin/logs"
+            element={
+              <AdminRoute>
+                <AdminSystemLogs />
+              </AdminRoute>
+            }
+          />
+
+          <Route
+            path="/admin/assign-delivery"
+            element={
+              <AdminRoute>
+                <AdminAssignDelivery />
+              </AdminRoute>
+            }
+          />
+
+          {/* Delivery Routes */}
+          <Route
+            path="/delivery/dashboard"
+            element={
+              <ProtectedRoute>
+                <DeliveryDashboard />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/delivery/orders"
+            element={
+              <ProtectedRoute>
+                <DeliveryOrders />
+              </ProtectedRoute>
             }
           />
 
