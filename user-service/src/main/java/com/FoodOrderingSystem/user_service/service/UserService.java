@@ -4,8 +4,8 @@ import com.FoodOrderingSystem.user_service.dto.ChangePasswordRequest;
 import com.FoodOrderingSystem.user_service.dto.RegisterRequest;
 import com.FoodOrderingSystem.user_service.dto.UpdateProfileRequest;
 import com.FoodOrderingSystem.user_service.dto.UserResponse;
-import com.FoodOrderingSystem.user_service.entity.User;
 import com.FoodOrderingSystem.user_service.entity.Role;
+import com.FoodOrderingSystem.user_service.entity.User;
 import com.FoodOrderingSystem.user_service.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -55,25 +55,51 @@ public class UserService {
         return mapToUserResponse(updatedUser);
     }
 
+    // تحديث مستخدم بواسطة الأدمن بناءً على ID
+    public UserResponse updateUserByAdmin(@NonNull Long id, UpdateProfileRequest request) {
+
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        if (request.getName() != null) {
+            user.setName(request.getName());
+        }
+
+        if (request.getPhone() != null) {
+            user.setPhone(request.getPhone());
+        }
+
+        if (request.getAddress() != null) {
+            user.setAddress(request.getAddress());
+        }
+
+        if (request.getRole() != null) {
+            user.setRole(request.getRole());
+        }
+
+        @SuppressWarnings("null")
+        User updatedUser = userRepository.save(user);
+
+        return mapToUserResponse(updatedUser);
+    }
+
     // تغيير كلمة المرور للمستخدم
     public String changePassword(String email, ChangePasswordRequest request) {
 
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        // التحقق من صحة كلمة المرور القديمة
         if (!passwordEncoder.matches(request.getOldPassword(), user.getPassword())) {
             throw new RuntimeException("Old password is incorrect");
         }
 
-        // تغيير كلمة المرور إلى الجديدة
         user.setPassword(passwordEncoder.encode(request.getNewPassword()));
         userRepository.save(user);
 
         return "Password changed successfully";
     }
 
-    // إرجاع جميع المستخدمين (يقتصر على الأدمن فقط)
+    // إرجاع جميع المستخدمين
     public List<UserResponse> getAllUsers() {
 
         return userRepository.findAll()
@@ -82,7 +108,7 @@ public class UserService {
                 .toList();
     }
 
-    // إرجاع مستخدم بناءً على ID (يقتصر على الأدمن فقط)
+    // إرجاع مستخدم بناءً على ID
     public UserResponse getUserById(@NonNull Long id) {
 
         User user = userRepository.findById(id)
@@ -91,7 +117,7 @@ public class UserService {
         return mapToUserResponse(user);
     }
 
-    // حذف مستخدم بناءً على ID (يقتصر على الأدمن فقط)
+    // حذف مستخدم بناءً على ID
     public String deleteUser(@NonNull Long id) {
 
         if (!userRepository.existsById(id)) {
@@ -103,21 +129,18 @@ public class UserService {
         return "User deleted successfully";
     }
 
-    // طريقة لإضافة مستخدم جديد
+    // إضافة مستخدم جديد بواسطة الأدمن
     public UserResponse addUser(RegisterRequest request) {
 
-        // تأكد إن الإيميل مش موجود قبل كده
         if (userRepository.existsByEmail(request.getEmail())) {
             throw new RuntimeException("Email already exists");
         }
 
-        // تعيين Role المستخدم
         Role role = request.getRole();
         if (role == null) {
-            role = Role.CUSTOMER; // لو مش موجود role، خليها Customer
+            role = Role.CUSTOMER;
         }
 
-        // إنشاء كائن المستخدم الجديد
         User user = new User();
         user.setName(request.getName());
         user.setEmail(request.getEmail());
@@ -126,21 +149,12 @@ public class UserService {
         user.setAddress(request.getAddress());
         user.setRole(role);
 
-        // حفظ المستخدم في الداتابيز
         User savedUser = userRepository.save(user);
 
-        // إرجاع الرد
-        return new UserResponse(
-                savedUser.getId(),
-                savedUser.getName(),
-                savedUser.getEmail(),
-                savedUser.getPhone(),
-                savedUser.getAddress(),
-                savedUser.getRole()
-        );
+        return mapToUserResponse(savedUser);
     }
 
-    // تحويل كائن User إلى UserResponse لتسليمه في الـ API Response
+    // تحويل User إلى UserResponse
     private UserResponse mapToUserResponse(User user) {
 
         return new UserResponse(

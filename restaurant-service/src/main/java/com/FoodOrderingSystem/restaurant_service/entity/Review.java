@@ -19,6 +19,8 @@ public class Review {
 
     private String comment;
     private int rating;
+    private Long customerId;
+    private String customerName;
 
     @ManyToOne
     @JoinColumn(name = "restaurant_id")

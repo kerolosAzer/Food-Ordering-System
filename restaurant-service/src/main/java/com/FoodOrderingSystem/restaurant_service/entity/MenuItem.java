@@ -1,7 +1,7 @@
 package com.FoodOrderingSystem.restaurant_service.entity;
 
 import lombok.Data;
-
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,7 +20,8 @@ public class MenuItem {
     private String name;
     private String description;
     private double price;
-
+    @Column(name = "image_url")
+    private String imageUrl;
     @ManyToOne
     @JoinColumn(name = "restaurant_id")
     private Restaurant restaurant;
@@ -32,4 +33,5 @@ public class MenuItem {
     public Long getRestaurantId() {
         return restaurant != null ? restaurant.getId() : null;
     }
+   
 }
