@@ -1,5 +1,22 @@
-{"properties": [{
-  "name": "jwt.secret",
-  "type": "java.lang.String",
-  "description": "A description for 'jwt.secret'"
-}]}
+{"properties": [
+  {
+    "name": "jwt.secret",
+    "type": "java.lang.String",
+    "description": "A description for 'jwt.secret'"
+  },
+  {
+    "name": "spring.cloud.gateway.server.webmvc.globalcors.cors-configurations.[/**].allowCredentials",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.cloud.gateway.server.webmvc.globalcors.cors-configurations.[/**].allowCredentials'"
+  },
+  {
+    "name": "spring.cloud.gateway.server.webmvc.globalcors.cors-configurations.[/**].allowedOrigins",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.cloud.gateway.server.webmvc.globalcors.cors-configurations.[/**].allowedOrigins'"
+  },
+  {
+    "name": "spring.cloud.gateway.server.webmvc.globalcors.cors-configurations.[/**].allowedHeaders",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.cloud.gateway.server.webmvc.globalcors.cors-configurations.[/**].allowedHeaders'"
+  }
+]}

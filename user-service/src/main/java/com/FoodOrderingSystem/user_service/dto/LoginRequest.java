@@ -9,4 +9,3 @@ public class LoginRequest {
 
     private String password;
 }
-// This class is used to capture the login details of a user. It includes fields for the user's email and password, which are required for authentication during the login process.

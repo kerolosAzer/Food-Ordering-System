@@ -1,0 +1,135 @@
+<mxfile host="Electron">
+  <diagram name="Page-1" id="q-8R7kHfSfCmv3bUyEQC">
+    <mxGraphModel dx="1129" dy="679" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="pc1bsHxg2icfp2DXxUbW-2" parent="1" style="whiteSpace=wrap;strokeWidth=2;fillColor=light-dark(#eeeeee,#1f2020);strokeColor=light-dark(#999999,#cccccc);fontColor=light-dark(#333333,#cccccc);" value="Admin confirms order first" vertex="1">
+          <mxGeometry height="54" width="249" x="300" y="209" as="geometry" />
+        </mxCell>
+        <mxCell id="pc1bsHxg2icfp2DXxUbW-3" parent="1" style="whiteSpace=wrap;strokeWidth=2;fillColor=light-dark(#eeeeee,#1f2020);strokeColor=light-dark(#999999,#cccccc);fontColor=light-dark(#333333,#cccccc);" value="Order status becomes CONFIRMED" vertex="1">
+          <mxGeometry height="78" width="260" x="295" y="313" as="geometry" />
+        </mxCell>
+        <mxCell id="pc1bsHxg2icfp2DXxUbW-4" parent="1" style="whiteSpace=wrap;strokeWidth=2;fillColor=light-dark(#eeeeee,#1f2020);strokeColor=light-dark(#999999,#cccccc);fontColor=light-dark(#333333,#cccccc);" value="Admin opens Assign Delivery page" vertex="1">
+          <mxGeometry height="78" width="260" x="295" y="441" as="geometry" />
+        </mxCell>
+        <mxCell id="pc1bsHxg2icfp2DXxUbW-5" parent="1" style="whiteSpace=wrap;strokeWidth=2;fillColor=light-dark(#eeeeee,#1f2020);strokeColor=light-dark(#999999,#cccccc);fontColor=light-dark(#333333,#cccccc);" value="Frontend requests assignable orders" vertex="1">
+          <mxGeometry height="78" width="260" x="295" y="569" as="geometry" />
+        </mxCell>
+        <mxCell id="pc1bsHxg2icfp2DXxUbW-6" parent="1" style="whiteSpace=wrap;strokeWidth=2;fillColor=light-dark(#eeeeee,#1f2020);strokeColor=light-dark(#999999,#cccccc);fontColor=light-dark(#333333,#cccccc);" value="API Gateway routes to Delivery Service" vertex="1">
+          <mxGeometry height="78" width="260" x="295" y="697" as="geometry" />
+        </mxCell>
+        <mxCell id="pc1bsHxg2icfp2DXxUbW-7" parent="1" style="whiteSpace=wrap;strokeWidth=2;fillColor=light-dark(#eeeeee,#1f2020);strokeColor=light-dark(#999999,#cccccc);fontColor=light-dark(#333333,#cccccc);" value="DeliveryController receives request" vertex="1">
+          <mxGeometry height="78" width="260" x="295" y="825" as="geometry" />
+        </mxCell>
+        <mxCell id="pc1bsHxg2icfp2DXxUbW-8" parent="1" style="whiteSpace=wrap;strokeWidth=2;fillColor=light-dark(#eeeeee,#1f2020);strokeColor=light-dark(#999999,#cccccc);fontColor=light-dark(#333333,#cccccc);" value="DeliveryService fetches confirmed orders" vertex="1">
+          <mxGeometry height="78" width="260" x="295" y="953" as="geometry" />
+        </mxCell>
+        <mxCell id="pc1bsHxg2icfp2DXxUbW-9" parent="1" style="whiteSpace=wrap;strokeWidth=2;fillColor=light-dark(#eeeeee,#1f2020);strokeColor=light-dark(#999999,#cccccc);fontColor=light-dark(#333333,#cccccc);" value="Admin selects order and delivery user" vertex="1">
+          <mxGeometry height="78" width="260" x="295" y="1081" as="geometry" />
+        </mxCell>
+        <mxCell id="pc1bsHxg2icfp2DXxUbW-10" parent="1" style="whiteSpace=wrap;strokeWidth=2;fillColor=light-dark(#eeeeee,#1f2020);strokeColor=light-dark(#999999,#cccccc);fontColor=light-dark(#333333,#cccccc);" value="Frontend sends assign request" vertex="1">
+          <mxGeometry height="78" width="260" x="295" y="1209" as="geometry" />
+        </mxCell>
+        <mxCell id="pc1bsHxg2icfp2DXxUbW-11" parent="1" style="whiteSpace=wrap;strokeWidth=2;fillColor=light-dark(#eeeeee,#1f2020);strokeColor=light-dark(#999999,#cccccc);fontColor=light-dark(#333333,#cccccc);" value="DeliveryController receives assign request" vertex="1">
+          <mxGeometry height="78" width="260" x="295" y="1337" as="geometry" />
+        </mxCell>
+        <mxCell id="pc1bsHxg2icfp2DXxUbW-12" parent="1" style="whiteSpace=wrap;strokeWidth=2;fillColor=light-dark(#eeeeee,#1f2020);strokeColor=light-dark(#999999,#cccccc);fontColor=light-dark(#333333,#cccccc);" value="DeliveryService creates Delivery record" vertex="1">
+          <mxGeometry height="78" width="260" x="295" y="1465" as="geometry" />
+        </mxCell>
+        <mxCell id="pc1bsHxg2icfp2DXxUbW-13" parent="1" style="whiteSpace=wrap;strokeWidth=2;fillColor=light-dark(#eeeeee,#1f2020);strokeColor=light-dark(#999999,#cccccc);fontColor=light-dark(#333333,#cccccc);" value="deliveryStatus = ASSIGNED" vertex="1">
+          <mxGeometry height="54" width="247" x="301" y="1593" as="geometry" />
+        </mxCell>
+        <mxCell id="pc1bsHxg2icfp2DXxUbW-14" parent="1" style="whiteSpace=wrap;strokeWidth=2;fillColor=light-dark(#eeeeee,#1f2020);strokeColor=light-dark(#999999,#cccccc);fontColor=light-dark(#333333,#cccccc);" value="Save Delivery in delivery_service_db" vertex="1">
+          <mxGeometry height="78" width="260" x="295" y="1697" as="geometry" />
+        </mxCell>
+        <mxCell id="pc1bsHxg2icfp2DXxUbW-15" parent="1" style="whiteSpace=wrap;strokeWidth=2;fillColor=light-dark(#eeeeee,#1f2020);strokeColor=light-dark(#999999,#cccccc);fontColor=light-dark(#333333,#cccccc);" value="Return DeliveryResponse to Admin" vertex="1">
+          <mxGeometry height="78" width="260" x="295" y="1825" as="geometry" />
+        </mxCell>
+        <mxCell id="pc1bsHxg2icfp2DXxUbW-17" edge="1" parent="1" style="curved=1;startArrow=none;endArrow=block;exitX=0.5;exitY=1;entryX=0.5;entryY=0;rounded=0;" target="pc1bsHxg2icfp2DXxUbW-2" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+            <mxPoint x="425" y="159" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pc1bsHxg2icfp2DXxUbW-18" edge="1" parent="1" source="pc1bsHxg2icfp2DXxUbW-2" style="curved=1;startArrow=none;endArrow=block;exitX=0.5;exitY=1;entryX=0.5;entryY=0;rounded=0;" target="pc1bsHxg2icfp2DXxUbW-3" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pc1bsHxg2icfp2DXxUbW-19" edge="1" parent="1" source="pc1bsHxg2icfp2DXxUbW-3" style="curved=1;startArrow=none;endArrow=block;exitX=0.5;exitY=1;entryX=0.5;entryY=0;rounded=0;" target="pc1bsHxg2icfp2DXxUbW-4" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pc1bsHxg2icfp2DXxUbW-20" edge="1" parent="1" source="pc1bsHxg2icfp2DXxUbW-4" style="curved=1;startArrow=none;endArrow=block;exitX=0.5;exitY=1;entryX=0.5;entryY=0;rounded=0;" target="pc1bsHxg2icfp2DXxUbW-5" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pc1bsHxg2icfp2DXxUbW-21" edge="1" parent="1" source="pc1bsHxg2icfp2DXxUbW-5" style="curved=1;startArrow=none;endArrow=block;exitX=0.5;exitY=1;entryX=0.5;entryY=0;rounded=0;" target="pc1bsHxg2icfp2DXxUbW-6" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pc1bsHxg2icfp2DXxUbW-22" edge="1" parent="1" source="pc1bsHxg2icfp2DXxUbW-6" style="curved=1;startArrow=none;endArrow=block;exitX=0.5;exitY=1;entryX=0.5;entryY=0;rounded=0;" target="pc1bsHxg2icfp2DXxUbW-7" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pc1bsHxg2icfp2DXxUbW-23" edge="1" parent="1" source="pc1bsHxg2icfp2DXxUbW-7" style="curved=1;startArrow=none;endArrow=block;exitX=0.5;exitY=1;entryX=0.5;entryY=0;rounded=0;" target="pc1bsHxg2icfp2DXxUbW-8" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pc1bsHxg2icfp2DXxUbW-24" edge="1" parent="1" source="pc1bsHxg2icfp2DXxUbW-8" style="curved=1;startArrow=none;endArrow=block;exitX=0.5;exitY=1;entryX=0.5;entryY=0;rounded=0;" target="pc1bsHxg2icfp2DXxUbW-9" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pc1bsHxg2icfp2DXxUbW-25" edge="1" parent="1" source="pc1bsHxg2icfp2DXxUbW-9" style="curved=1;startArrow=none;endArrow=block;exitX=0.5;exitY=1;entryX=0.5;entryY=0;rounded=0;" target="pc1bsHxg2icfp2DXxUbW-10" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pc1bsHxg2icfp2DXxUbW-26" edge="1" parent="1" source="pc1bsHxg2icfp2DXxUbW-10" style="curved=1;startArrow=none;endArrow=block;exitX=0.5;exitY=1;entryX=0.5;entryY=0;rounded=0;" target="pc1bsHxg2icfp2DXxUbW-11" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pc1bsHxg2icfp2DXxUbW-27" edge="1" parent="1" source="pc1bsHxg2icfp2DXxUbW-11" style="curved=1;startArrow=none;endArrow=block;exitX=0.5;exitY=1;entryX=0.5;entryY=0;rounded=0;" target="pc1bsHxg2icfp2DXxUbW-12" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pc1bsHxg2icfp2DXxUbW-28" edge="1" parent="1" source="pc1bsHxg2icfp2DXxUbW-12" style="curved=1;startArrow=none;endArrow=block;exitX=0.5;exitY=1;entryX=0.5;entryY=0;rounded=0;" target="pc1bsHxg2icfp2DXxUbW-13" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pc1bsHxg2icfp2DXxUbW-29" edge="1" parent="1" source="pc1bsHxg2icfp2DXxUbW-13" style="curved=1;startArrow=none;endArrow=block;exitX=0.5;exitY=1;entryX=0.5;entryY=0;rounded=0;" target="pc1bsHxg2icfp2DXxUbW-14" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pc1bsHxg2icfp2DXxUbW-30" edge="1" parent="1" source="pc1bsHxg2icfp2DXxUbW-14" style="curved=1;startArrow=none;endArrow=block;exitX=0.5;exitY=1;entryX=0.5;entryY=0;rounded=0;" target="pc1bsHxg2icfp2DXxUbW-15" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pc1bsHxg2icfp2DXxUbW-31" edge="1" parent="1" source="pc1bsHxg2icfp2DXxUbW-15" style="curved=1;startArrow=none;endArrow=block;exitX=0.5;exitY=1;entryX=0.49;entryY=0;rounded=0;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+            <mxPoint x="424.99" y="1953" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pc1bsHxg2icfp2DXxUbW-32" parent="1" style="ellipse;html=1;shape=startState;fillColor=#000000;strokeColor=#ff0000;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="409.5" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="pc1bsHxg2icfp2DXxUbW-34" parent="1" style="ellipse;html=1;shape=endState;fillColor=#000000;strokeColor=#ff0000;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="410" y="1950" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

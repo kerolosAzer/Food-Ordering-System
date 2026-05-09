@@ -22,13 +22,11 @@ public class UserController {
 
     private final UserService userService;
 
-    // الحصول على بيانات المستخدم الحالي (Profile)
     @GetMapping("/profile")
     public UserResponse profile(Authentication authentication) {
         return userService.getProfile(authentication.getName());
     }
 
-    // تحديث بيانات المستخدم
     @PutMapping("/profile")
     public UserResponse updateProfile(
             Authentication authentication,
@@ -37,7 +35,6 @@ public class UserController {
         return userService.updateProfile(authentication.getName(), request);
     }
 
-    // تغيير كلمة المرور للمستخدم
     @PutMapping("/change-password")
     public Map<String, String> changePassword(
             Authentication authentication,
@@ -47,30 +44,37 @@ public class UserController {
         return Map.of("message", message);
     }
 
-    // الحصول على جميع المستخدمين للأدمن فقط
     @GetMapping("/all")
-    @PreAuthorize("hasRole('ADMIN')")  // التأكد من أن الشخص هو الأدمن
+    @PreAuthorize("hasRole('ADMIN')")
     public List<UserResponse> getAllUsers() {
         return userService.getAllUsers();
     }
 
-    // الحصول على مستخدم حسب الـ ID
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public UserResponse getUserById(@PathVariable @NonNull Long id) {
         return userService.getUserById(id);
     }
 
-    // حذف مستخدم بالأدمن
+    @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public UserResponse updateUserByAdmin(
+            @PathVariable @NonNull Long id,
+            @RequestBody UpdateProfileRequest request
+    ) {
+        return userService.updateUserByAdmin(id, request);
+    }
+
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")  // التأكد من أن الشخص هو الأدمن
+    @PreAuthorize("hasRole('ADMIN')")
     public Map<String, String> deleteUser(@PathVariable @NonNull Long id) {
         String message = userService.deleteUser(id);
         return Map.of("message", message);
     }
 
-    // إضافة مستخدم جديد (يقتصر على الأدمن)
+   
     @PostMapping("/add")
-    @PreAuthorize("hasRole('ADMIN')")  // التأكد من أن الشخص هو الأدمن
+    @PreAuthorize("hasRole('ADMIN')")
     public UserResponse addUser(@RequestBody RegisterRequest request) {
         return userService.addUser(request);
     }

@@ -1,13 +1,8 @@
 package com.FoodOrderingSystem.restaurant_service.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.*;
 import lombok.Data;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 
 @Data
 @Entity
@@ -21,14 +16,18 @@ public class MenuItem {
     private String description;
     private double price;
 
+    private String category;
+
+    private boolean available = true;
+
+    @Column(name = "image_url")
+    private String imageUrl;
+
     @ManyToOne
     @JoinColumn(name = "restaurant_id")
+    @JsonIgnoreProperties({"menuItems"})
     private Restaurant restaurant;
 
-    /**
-     * Convenience accessor for cases where only the FK id is needed.
-     * Prefer using {@link #getRestaurant()} when possible.
-     */
     public Long getRestaurantId() {
         return restaurant != null ? restaurant.getId() : null;
     }

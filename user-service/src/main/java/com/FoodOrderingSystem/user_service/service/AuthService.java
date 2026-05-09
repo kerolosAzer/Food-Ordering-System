@@ -18,12 +18,7 @@ public class AuthService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
-// 1. يتأكد إن الإيميل مش موجود قبل كده
-// 2. يحدد role، ولو مش مبعوت يخليه CUSTOMER
-// 3. يشفر الباسورد باستخدام BCrypt
-// 4. يحفظ المستخدم في الداتابيز
-// 5. يعمل JWT token
-// 6. يرجع AuthResponse
+
     public AuthResponse register(RegisterRequest request) {
 
         if (userRepository.existsByEmail(request.getEmail())) {
@@ -56,10 +51,7 @@ public class AuthService {
                 "User registered successfully"
         );
     }
-// 1. يدور على المستخدم بالإيميل
-// 2. يقارن الباسورد المدخل بالباسورد المشفر
-// 3. لو صح يعمل JWT token جديد
-// 4. يرجع AuthResponse
+
     public AuthResponse login(LoginRequest request) {
 
         User user = userRepository.findByEmail(request.getEmail())
