@@ -12,7 +12,6 @@ import java.util.Date;
 
 @Service
 public class JwtService {
-    // In a real application, use a more secure way to manage the secret key
     private static final String SECRET_KEY =
             "my-super-secret-key-for-food-ordering-system-must-be-long";
 
@@ -21,7 +20,6 @@ public class JwtService {
     private SecretKey getSigningKey() {
         return Keys.hmacShaKeyFor(SECRET_KEY.getBytes(StandardCharsets.UTF_8));
     }
-    // Generate JWT token for a user
 
     public String generateToken(User user) {
         return Jwts.builder()
@@ -34,7 +32,6 @@ public class JwtService {
                 .signWith(getSigningKey())
                 .compact();
     }
-// Extract claims from the token
     public Claims extractClaims(String token) {
         return Jwts.parser()
                 .verifyWith(getSigningKey())
@@ -42,16 +39,13 @@ public class JwtService {
                 .parseSignedClaims(token)
                 .getPayload();
     }
-// Extract email (subject) from the token
     public String extractEmail(String token) {
         return extractClaims(token).getSubject();
     }
-// Validate the token against a user
     public boolean isTokenValid(String token, User user) {
         String email = extractEmail(token);
         return email.equals(user.getEmail()) && !isTokenExpired(token);
     }
-// Check if the token is expired
     private boolean isTokenExpired(String token) {
         Date expiration = extractClaims(token).getExpiration();
         return expiration.before(new Date());

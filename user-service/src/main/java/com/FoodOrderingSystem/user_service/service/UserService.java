@@ -55,7 +55,6 @@ public class UserService {
         return mapToUserResponse(updatedUser);
     }
 
-    // تحديث مستخدم بواسطة الأدمن بناءً على ID
     public UserResponse updateUserByAdmin(@NonNull Long id, UpdateProfileRequest request) {
 
         User user = userRepository.findById(id)
@@ -83,7 +82,6 @@ public class UserService {
         return mapToUserResponse(updatedUser);
     }
 
-    // تغيير كلمة المرور للمستخدم
     public String changePassword(String email, ChangePasswordRequest request) {
 
         User user = userRepository.findByEmail(email)

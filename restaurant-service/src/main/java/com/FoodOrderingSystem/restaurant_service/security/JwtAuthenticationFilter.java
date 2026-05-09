@@ -37,12 +37,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     String path = request.getRequestURI();
     String method = request.getMethod();
 
-    // فتح GET /api/menu/{id} بدون توكن
     if ("GET".equalsIgnoreCase(method) && path.startsWith("/api/menu")) {
         return true;
     }
 
-    // فتح GET /api/restaurants/all بدون توكن
     if ("GET".equalsIgnoreCase(method) && path.equals("/api/restaurants/all")) {
         return true;
     }

@@ -61,7 +61,6 @@ public class SecurityConfig {
 
                 .authorizeHttpRequests(auth -> auth
 
-                        // Public endpoints
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/h2-console/**").permitAll()
 
@@ -72,10 +71,9 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.DELETE, "/api/users/{id}").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/api/users/add").hasRole("ADMIN")
 
-                        // Logged-in user endpoints
                         .requestMatchers("/api/users/**").authenticated()
 
-                        // Any other request
+                
                         .anyRequest().authenticated()
                 )
 

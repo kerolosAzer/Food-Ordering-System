@@ -18,7 +18,3 @@ public class RegisterRequest {
 
     private Role role;  
 }
-// This class is used to capture the registration details of a
-//  new user. It includes fields for the user's name, email, password, phone number, address, and role (which can be ADMIN, CUSTOMER, or DELIVERY).
-// DTO معناها Data Transfer Object.
-// DTO: يعني كلاس مخصص لاستقبال أو إرسال بيانات من وإلى الـ API.

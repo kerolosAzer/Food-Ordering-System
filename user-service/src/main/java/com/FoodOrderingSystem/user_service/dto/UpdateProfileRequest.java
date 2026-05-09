@@ -12,6 +12,6 @@ public class UpdateProfileRequest {
 
     private String address;
 
-    // للأدمن فقط: تعديل دور المستخدم
+   
     private Role role;
 }
