@@ -1,0 +1,51 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/26.2.2 Chrome/134.0.6998.178 Electron/35.1.2 Safari/537.36" version="26.2.2">
+  <diagram name="Page-1" id="vE0CFFEFydOQcolykOsx">
+    <mxGraphModel dx="780" dy="965" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="tyNfxr1GGZJ50AXQUbP--1" value="API Gateway - Spring Cloud Gateway Web MVC" style="whiteSpace=wrap;strokeWidth=2;" parent="1" vertex="1">
+          <mxGeometry x="515" y="200" width="265" height="560" as="geometry" />
+        </mxCell>
+        <mxCell id="tyNfxr1GGZJ50AXQUbP--9" value="External Client → User Service Route" style="curved=1;startArrow=none;endArrow=block;exitX=0.62;exitY=0;entryX=0;entryY=0.5;rounded=0;entryDx=0;entryDy=0;" parent="1" target="tyNfxr1GGZJ50AXQUbP--18" edge="1">
+          <mxGeometry x="-0.1107" y="-67" relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="390" y="162" />
+            </Array>
+            <mxPoint x="171.27999999999997" y="395.9999999999998" as="sourcePoint" />
+            <mxPoint x="539.9999999999995" y="162.5" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="tyNfxr1GGZJ50AXQUbP--10" value="External Client → Restaurant Service Route" style="curved=1;startArrow=none;endArrow=block;entryX=0.219;entryY=0.863;rounded=0;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" target="tyNfxr1GGZJ50AXQUbP--17" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+            <mxPoint x="180" y="430" as="sourcePoint" />
+            <mxPoint x="539.9999999999995" y="427.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="tyNfxr1GGZJ50AXQUbP--11" value="External Client → Order Service Route" style="curved=1;startArrow=none;endArrow=block;exitX=0.62;exitY=1;entryX=0;entryY=0.5;rounded=0;" parent="1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="390" y="692" />
+            </Array>
+            <mxPoint x="171.28000000000043" y="458.9999999999998" as="sourcePoint" />
+            <mxPoint x="539.9999999999995" y="692.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="tyNfxr1GGZJ50AXQUbP--15" value="&lt;span style=&quot;text-wrap-mode: wrap;&quot;&gt;External Client&lt;/span&gt;" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" parent="1" vertex="1">
+          <mxGeometry x="110" y="350" width="60" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="tyNfxr1GGZJ50AXQUbP--17" value="Route to Restaurant Service&lt;br style=&quot;padding: 0px; margin: 0px;&quot;&gt;/restaurant-service/**" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="540" y="520" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="tyNfxr1GGZJ50AXQUbP--18" value="Route to User Service&lt;br style=&quot;padding: 0px; margin: 0px;&quot;&gt;/user-service/**" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="560" y="290" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="tyNfxr1GGZJ50AXQUbP--19" value="Route to Order Service&lt;br style=&quot;padding: 0px; margin: 0px;&quot;&gt;/order-service/**" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="540" y="650" width="120" height="80" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

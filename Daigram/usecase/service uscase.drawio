@@ -1,0 +1,201 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/26.2.2 Chrome/134.0.6998.178 Electron/35.1.2 Safari/537.36" version="26.2.2">
+  <diagram name="Page-1" id="d_ab0yLJzSgfR5emARfk">
+    <mxGraphModel dx="1514" dy="1103" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="z9LQruVvIhZrPwFfcF8G-1" value="User Service" style="whiteSpace=wrap;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="464" y="20" width="294" height="1953" as="geometry" />
+        </mxCell>
+        <mxCell id="z9LQruVvIhZrPwFfcF8G-2" value="Users APIs  /api/users" style="whiteSpace=wrap;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="489" y="40" width="244" height="1570" as="geometry" />
+        </mxCell>
+        <mxCell id="z9LQruVvIhZrPwFfcF8G-3" value="Auth APIs  /api/auth" style="whiteSpace=wrap;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="489" y="1630" width="244" height="324" as="geometry" />
+        </mxCell>
+        <mxCell id="z9LQruVvIhZrPwFfcF8G-19" value="Customer → Register" style="curved=1;startArrow=none;endArrow=block;entryX=0.12;entryY=0;rounded=0;" edge="1" parent="1" source="z9LQruVvIhZrPwFfcF8G-49">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="337" y="940" />
+              <mxPoint x="464" y="940" />
+              <mxPoint x="489" y="1715" />
+            </Array>
+            <mxPoint x="187.20000000000027" y="875" as="sourcePoint" />
+            <mxPoint x="583.0651239310146" y="1837.2015485856496" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="z9LQruVvIhZrPwFfcF8G-20" value="Customer → Login" style="curved=1;startArrow=none;endArrow=block;entryX=0.01;entryY=0.34;rounded=0;" edge="1" parent="1" source="z9LQruVvIhZrPwFfcF8G-49">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="337" y="878" />
+              <mxPoint x="464" y="878" />
+              <mxPoint x="489" y="1683" />
+            </Array>
+            <mxPoint x="210" y="857.99" as="sourcePoint" />
+            <mxPoint x="579.5163776760996" y="1712.6885195974314" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="z9LQruVvIhZrPwFfcF8G-21" value="Customer → Get current profile" style="curved=1;startArrow=none;endArrow=block;exitX=0.59;exitY=0;entryX=0.43;entryY=0;rounded=0;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="337" y="451" />
+              <mxPoint x="489" y="451" />
+            </Array>
+            <mxPoint x="132.10000000000002" y="812" as="sourcePoint" />
+            <mxPoint x="597.955297231161" y="1198.8811374927648" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="z9LQruVvIhZrPwFfcF8G-22" value="Customer → Update profile" style="curved=1;startArrow=none;endArrow=block;exitX=0.58;exitY=0;entryX=0;entryY=0.5;rounded=0;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="337" y="377" />
+            </Array>
+            <mxPoint x="130.20000000000005" y="812" as="sourcePoint" />
+            <mxPoint x="535" y="377" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="z9LQruVvIhZrPwFfcF8G-23" value="Customer → Change password" style="curved=1;startArrow=none;endArrow=block;exitX=0.55;exitY=0;entryX=0;entryY=0.5;rounded=0;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="337" y="163" />
+            </Array>
+            <mxPoint x="124.5" y="812" as="sourcePoint" />
+            <mxPoint x="522.9999999999998" y="163" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="z9LQruVvIhZrPwFfcF8G-24" value="Admin → Login" style="curved=1;startArrow=none;endArrow=block;exitX=0.7;exitY=1;entryX=0.01;entryY=0.56;rounded=0;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="337" y="1632" />
+              <mxPoint x="464" y="1632" />
+              <mxPoint x="489" y="1735" />
+            </Array>
+            <mxPoint x="145.9000000000001" y="1439" as="sourcePoint" />
+            <mxPoint x="578.2189479796632" y="1726.2661227357057" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="z9LQruVvIhZrPwFfcF8G-25" value="Admin → Get current profile" style="curved=1;startArrow=none;endArrow=block;entryX=0;entryY=0.35;rounded=0;" edge="1" parent="1" source="z9LQruVvIhZrPwFfcF8G-47">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="337" y="1485" />
+              <mxPoint x="464" y="1485" />
+              <mxPoint x="489" y="1259" />
+            </Array>
+            <mxPoint x="193" y="1434.0588235294117" as="sourcePoint" />
+            <mxPoint x="518.0908503335472" y="1267.127255100064" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="z9LQruVvIhZrPwFfcF8G-26" value="Admin → List all users" style="curved=1;startArrow=none;endArrow=block;entryX=0.31;entryY=0;rounded=0;" edge="1" parent="1" source="z9LQruVvIhZrPwFfcF8G-47">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="337" y="1411" />
+              <mxPoint x="464" y="1411" />
+              <mxPoint x="489" y="1186" />
+            </Array>
+            <mxPoint x="193" y="1408.7352941176468" as="sourcePoint" />
+            <mxPoint x="587.826310715132" y="1446.3565656272215" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="z9LQruVvIhZrPwFfcF8G-27" value="Admin → Get user by id" style="curved=1;startArrow=none;endArrow=block;entryX=0;entryY=0.61;rounded=0;" edge="1" parent="1" source="z9LQruVvIhZrPwFfcF8G-47">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="337" y="1301" />
+              <mxPoint x="464" y="1301" />
+              <mxPoint x="489" y="1075" />
+            </Array>
+            <mxPoint x="150" y="1400" as="sourcePoint" />
+            <mxPoint x="538.671426984783" y="1065.085445088207" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="z9LQruVvIhZrPwFfcF8G-28" value="Admin → Admin add user" style="curved=1;startArrow=none;endArrow=block;exitX=0.69;exitY=0;entryX=0;entryY=0.5;rounded=0;entryDx=0;entryDy=0;" edge="1" parent="1" target="z9LQruVvIhZrPwFfcF8G-40">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="337" y="1162" />
+              <mxPoint x="464" y="1162" />
+              <mxPoint x="489" y="871" />
+            </Array>
+            <mxPoint x="144.3299999999997" y="1375.9999999999998" as="sourcePoint" />
+            <mxPoint x="531.8068155066528" y="862.4597380373591" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="z9LQruVvIhZrPwFfcF8G-29" value="Admin → Admin delete user" style="curved=1;startArrow=none;endArrow=block;exitX=0.62;exitY=0;entryX=0;entryY=0.6;rounded=0;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="337" y="1013" />
+              <mxPoint x="464" y="1013" />
+              <mxPoint x="489" y="648" />
+            </Array>
+            <mxPoint x="133.34000000000003" y="1375.9999999999998" as="sourcePoint" />
+            <mxPoint x="518.8157068228986" y="640.8368586354204" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="z9LQruVvIhZrPwFfcF8G-30" value="Delivery → Register" style="curved=1;startArrow=none;endArrow=block;exitX=1;exitY=0.9;entryX=0;entryY=0.5;rounded=0;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="337" y="1873" />
+            </Array>
+            <mxPoint x="204.00000000000023" y="1834.6999999999998" as="sourcePoint" />
+            <mxPoint x="565.000000000003" y="1873.4999999999995" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="z9LQruVvIhZrPwFfcF8G-31" value="Delivery → Login" style="curved=1;startArrow=none;endArrow=block;exitX=1;exitY=0.59;entryX=0.01;entryY=0.92;rounded=0;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="337" y="1824" />
+              <mxPoint x="489" y="1824" />
+            </Array>
+            <mxPoint x="204.00000000000023" y="1815.1699999999996" as="sourcePoint" />
+            <mxPoint x="585.7369721728226" y="1743.548573653101" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="z9LQruVvIhZrPwFfcF8G-32" value="Delivery → Get current profile" style="curved=1;startArrow=none;endArrow=block;exitX=0.84;exitY=-0.01;rounded=0;" edge="1" parent="1" target="z9LQruVvIhZrPwFfcF8G-42">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="337" y="1694" />
+              <mxPoint x="464" y="1694" />
+              <mxPoint x="489" y="1442" />
+            </Array>
+            <mxPoint x="174.5" y="1778" as="sourcePoint" />
+            <mxPoint x="549.430275934081" y="1369.9544466889452" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="z9LQruVvIhZrPwFfcF8G-36" value="Change password" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="523" y="120" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="z9LQruVvIhZrPwFfcF8G-37" value="Update profile" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="537" y="340" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="z9LQruVvIhZrPwFfcF8G-39" value="Get user by id" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="537" y="1020" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="z9LQruVvIhZrPwFfcF8G-40" value="Admin add user" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="537" y="840" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="z9LQruVvIhZrPwFfcF8G-41" value="Admin delete user" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="523" y="600" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="z9LQruVvIhZrPwFfcF8G-42" value="Get current profile" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="528" y="1200" width="165" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="z9LQruVvIhZrPwFfcF8G-43" value="List all users" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="536" y="1450" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="z9LQruVvIhZrPwFfcF8G-44" value="Login" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="580" y="1680" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="z9LQruVvIhZrPwFfcF8G-46" value="Register" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="570" y="1830" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="z9LQruVvIhZrPwFfcF8G-47" value="&lt;span style=&quot;text-wrap-mode: wrap;&quot;&gt;Admin&lt;/span&gt;" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="1">
+          <mxGeometry x="70" y="1350" width="70" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="z9LQruVvIhZrPwFfcF8G-48" value="&lt;span style=&quot;text-wrap-mode: wrap;&quot;&gt;Delivery&lt;/span&gt;" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="1">
+          <mxGeometry x="150" y="1760" width="60" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="z9LQruVvIhZrPwFfcF8G-49" value="&lt;span style=&quot;text-wrap-mode: wrap;&quot;&gt;Customer&lt;/span&gt;" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="1">
+          <mxGeometry x="89" y="785" width="53" height="80" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

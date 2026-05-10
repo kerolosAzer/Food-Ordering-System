@@ -1,0 +1,139 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/26.2.2 Chrome/134.0.6998.178 Electron/35.1.2 Safari/537.36" version="26.2.2">
+  <diagram name="Page-1" id="ESVjm1_CRDo3xDEyVy6N">
+    <mxGraphModel dx="1060" dy="772" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="uWqw-IT_OkxwJb1ZGctE-1" value="Restaurant Service" style="whiteSpace=wrap;strokeWidth=2;" parent="1" vertex="1">
+          <mxGeometry x="459" y="20" width="315" height="2232" as="geometry" />
+        </mxCell>
+        <mxCell id="uWqw-IT_OkxwJb1ZGctE-2" value="Reviews APIs  /api/reviews" style="whiteSpace=wrap;strokeWidth=2;" parent="1" vertex="1">
+          <mxGeometry x="484" y="40" width="265" height="455" as="geometry" />
+        </mxCell>
+        <mxCell id="uWqw-IT_OkxwJb1ZGctE-3" value="Menu APIs  /api/menu" style="whiteSpace=wrap;strokeWidth=2;" parent="1" vertex="1">
+          <mxGeometry x="484" y="1244" width="265" height="988" as="geometry" />
+        </mxCell>
+        <mxCell id="uWqw-IT_OkxwJb1ZGctE-4" value="Restaurants APIs  /api/restaurants" style="whiteSpace=wrap;strokeWidth=2;" parent="1" vertex="1">
+          <mxGeometry x="484" y="515" width="265" height="709" as="geometry" />
+        </mxCell>
+        <mxCell id="uWqw-IT_OkxwJb1ZGctE-25" value="Customer → Add review" style="curved=1;startArrow=none;endArrow=block;entryX=0;entryY=0.5;rounded=0;" parent="1" source="uWqw-IT_OkxwJb1ZGctE-38" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="335" y="135" />
+            </Array>
+            <mxPoint x="130.19999999999993" y="572" as="sourcePoint" />
+            <mxPoint x="556.9999999999977" y="142.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="uWqw-IT_OkxwJb1ZGctE-26" value="Customer → View all restaurants" style="curved=1;startArrow=none;endArrow=block;entryX=0;entryY=0.32;rounded=0;" parent="1" source="uWqw-IT_OkxwJb1ZGctE-38" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="484" y="603" />
+            </Array>
+            <mxPoint x="210" y="603.5" as="sourcePoint" />
+            <mxPoint x="520.8917981348093" y="617.42182903815" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="uWqw-IT_OkxwJb1ZGctE-27" value="Customer → Get menu item by ID" style="curved=1;startArrow=none;endArrow=block;entryX=0;entryY=0.31;rounded=0;" parent="1" source="uWqw-IT_OkxwJb1ZGctE-38" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="140" y="660" />
+              <mxPoint x="335" y="1334" />
+              <mxPoint x="484" y="1334" />
+            </Array>
+            <mxPoint x="518.6546189387852" y="1347.2143231145078" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="uWqw-IT_OkxwJb1ZGctE-28" value="Customer → View restaurant menu" style="curved=1;startArrow=none;endArrow=block;entryX=0;entryY=0.14;rounded=0;" parent="1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="335" y="1552" />
+              <mxPoint x="484" y="1552" />
+            </Array>
+            <mxPoint x="80" y="630" as="sourcePoint" />
+            <mxPoint x="529.1118672663356" y="1583.8935765490164" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="uWqw-IT_OkxwJb1ZGctE-29" value="Customer → View restaurant reviews" style="curved=1;startArrow=none;endArrow=block;entryX=0;entryY=0.23;rounded=0;" parent="1" source="uWqw-IT_OkxwJb1ZGctE-38" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="335" y="281" />
+              <mxPoint x="484" y="281" />
+            </Array>
+            <mxPoint x="135.89999999999998" y="572" as="sourcePoint" />
+            <mxPoint x="521.849356758366" y="301.5342690237354" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="uWqw-IT_OkxwJb1ZGctE-30" value="Admin → Add restaurant" style="curved=1;startArrow=none;endArrow=block;exitX=0.58;exitY=0;entryX=0;entryY=0.5;rounded=0;" parent="1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="335" y="880" />
+            </Array>
+            <mxPoint x="127.05999999999983" y="1459" as="sourcePoint" />
+            <mxPoint x="537.0000000000011" y="917.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="uWqw-IT_OkxwJb1ZGctE-31" value="Admin → Delete restaurant" style="curved=1;startArrow=none;endArrow=block;exitX=0.62;exitY=0;entryX=0;entryY=0.5;rounded=0;" parent="1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="335" y="1098" />
+            </Array>
+            <mxPoint x="133.33999999999992" y="1459" as="sourcePoint" />
+            <mxPoint x="526.0000000000002" y="1098.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="uWqw-IT_OkxwJb1ZGctE-32" value="Admin → Add menu item" style="curved=1;startArrow=none;endArrow=block;exitX=0.62;exitY=1;entryX=0;entryY=0.5;rounded=0;" parent="1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="335" y="1883" />
+            </Array>
+            <mxPoint x="133.34000000000003" y="1522" as="sourcePoint" />
+            <mxPoint x="537.0000000000005" y="1883" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="uWqw-IT_OkxwJb1ZGctE-33" value="Admin → Delete menu item" style="curved=1;startArrow=none;endArrow=block;exitX=0.58;exitY=1;entryX=0;entryY=0.5;rounded=0;" parent="1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="335" y="2105" />
+            </Array>
+            <mxPoint x="127.06000000000006" y="1522" as="sourcePoint" />
+            <mxPoint x="524" y="2104" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="uWqw-IT_OkxwJb1ZGctE-38" value="customr&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" parent="1" vertex="1">
+          <mxGeometry x="20" y="550" width="60" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="uWqw-IT_OkxwJb1ZGctE-40" value="&lt;span style=&quot;text-wrap-mode: wrap;&quot;&gt;&amp;nbsp;Admin&lt;/span&gt;" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" parent="1" vertex="1">
+          <mxGeometry x="80" y="1430" width="50" height="92" as="geometry" />
+        </mxCell>
+        <mxCell id="uWqw-IT_OkxwJb1ZGctE-41" value="Add review" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="557" y="100" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="uWqw-IT_OkxwJb1ZGctE-42" value="View all restaurants" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="524" y="580" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="uWqw-IT_OkxwJb1ZGctE-43" value="View restaurant reviews" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="515" y="290" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="uWqw-IT_OkxwJb1ZGctE-44" value="Delete restaurant" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="524" y="1058.5" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="uWqw-IT_OkxwJb1ZGctE-45" value="Add restaurant" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="537" y="890" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="uWqw-IT_OkxwJb1ZGctE-46" value="Delete menu item" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="524" y="2064.5" width="176" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="uWqw-IT_OkxwJb1ZGctE-47" value="Add menu item" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="537" y="1843.5" width="153" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="uWqw-IT_OkxwJb1ZGctE-48" value="View restaurant menu" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="534" y="1550" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="uWqw-IT_OkxwJb1ZGctE-49" value="Get menu item by ID" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="524" y="1310" width="120" height="80" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
