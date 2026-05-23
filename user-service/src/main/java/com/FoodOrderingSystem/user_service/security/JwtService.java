@@ -4,6 +4,7 @@ import com.FoodOrderingSystem.user_service.entity.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
@@ -12,13 +13,14 @@ import java.util.Date;
 
 @Service
 public class JwtService {
-    private static final String SECRET_KEY =
-            "my-super-secret-key-for-food-ordering-system-must-be-long";
+
+    @Value("${jwt.secret}")
+    private String secretKey;
 
     private final long EXPIRATION_TIME = 1000 * 60 * 60 * 24;
 
     private SecretKey getSigningKey() {
-        return Keys.hmacShaKeyFor(SECRET_KEY.getBytes(StandardCharsets.UTF_8));
+        return Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
     }
 
     public String generateToken(User user) {
